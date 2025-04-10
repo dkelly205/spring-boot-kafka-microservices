@@ -28,7 +28,7 @@ sequenceDiagram
   Client->>OrderController: POST /api/v1/orders
   OrderController->>OrderProducer: sendMessage
   OrderProducer->>Kafka: send
-  OrderController->>Client: ResponseEntity, 201 status code
+  OrderController-->>Client: ResponseEntity, 201 status code
   Kafka->>EmailService: consume
   Kafka->>StockService: consume
 
