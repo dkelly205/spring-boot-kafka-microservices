@@ -11,3 +11,25 @@ to multiple consumers (stock service & email service)
 - Spring Boot
 - Spring Web
 - Lombok
+
+
+### Sequence Diagram:
+
+```mermaid
+sequenceDiagram
+  participant Client
+  box "Order service"
+    participant OrderController
+    participant OrderProducer
+  end
+  participant Kafka
+  participant EmailService
+  participant StockService
+  Client->>OrderController: POST /api/v1/orders
+  OrderController->>OrderProducer: sendMessage
+  OrderProducer->>Kafka: send
+  OrderController-->>Client: ResponseEntity, 201 status code
+  Kafka->>EmailService: consume
+  Kafka->>StockService: consume
+
+```
