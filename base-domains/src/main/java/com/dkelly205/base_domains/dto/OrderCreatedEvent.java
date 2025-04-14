@@ -5,13 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderEvent {
+public class OrderCreatedEvent {
 
-    private String message;
-    private String status;
-    private OrderDto orderDto;
+    private Long orderId;
+    private String name;
+    private String email;
+    private List<OrderItemDto> items;
 }

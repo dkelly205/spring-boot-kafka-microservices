@@ -1,6 +1,7 @@
 package com.dkelly205.order_service.service.impl;
 
-import com.dkelly205.base_domains.dto.OrderDto;
+import com.dkelly205.order_service.dto.OrderRequest;
+import com.dkelly205.order_service.dto.OrderResponse;
 import com.dkelly205.order_service.entity.CartOrder;
 import com.dkelly205.order_service.entity.OutboxEvent;
 import com.dkelly205.order_service.enums.OutboxStatus;
@@ -22,16 +23,15 @@ public class OrderServiceImpl implements OrderService {
 
 
 
-    public OrderDto create(OrderDto orderDto) {
-        CartOrder cartOrder = orderMapper.mapToEntity(orderDto);
+    public OrderResponse create(OrderRequest orderRequest) {
+        CartOrder cartOrder = orderMapper.mapToEntity(orderRequest);
         CartOrder savedCartOrder = save(cartOrder);
-        return orderMapper.mapToDto(savedCartOrder);
+        return orderMapper.mapToResponse(savedCartOrder);
     }
 
     @Transactional
     private CartOrder save(CartOrder cartOrder){
         CartOrder savedCartOrder = orderRepository.save(cartOrder);
-
 
         OutboxEvent outboxEvent = OutboxEvent.builder()
                 .cartOrder(cartOrder)

@@ -1,6 +1,6 @@
 package com.dkelly205.order_service.kafka;
 
-import com.dkelly205.base_domains.dto.OrderEvent;
+import com.dkelly205.base_domains.dto.OrderCreatedEvent;
 import lombok.AllArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
@@ -18,12 +18,12 @@ public class OrderProducer {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderProducer.class);
 
     private NewTopic topic;
-    private KafkaTemplate<String, OrderEvent> kafkaTemplate;
+    private KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
 
-    public void sendMessage(OrderEvent event) {
+    public void sendMessage(OrderCreatedEvent event) {
         LOGGER.info(String.format("Order event => %s", event.toString()));
 
-        Message<OrderEvent> message = MessageBuilder
+        Message<OrderCreatedEvent> message = MessageBuilder
                 .withPayload(event)
                 .setHeader(KafkaHeaders.TOPIC, topic.name())
                 .build();

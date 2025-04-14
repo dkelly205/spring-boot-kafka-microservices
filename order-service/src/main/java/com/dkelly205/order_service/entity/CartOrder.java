@@ -3,8 +3,13 @@ package com.dkelly205.order_service.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name="orders")
+@Table(name="cart_orders")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,10 +25,12 @@ public class CartOrder {
 
     private String email;
 
+    private LocalDateTime createdAt;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_id", referencedColumnName = "id")
-    private Cart cart;
+    private BigDecimal total;
+
+    @OneToMany(mappedBy = "cartOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> items = new ArrayList<>();
 
 
 

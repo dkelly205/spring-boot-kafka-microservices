@@ -1,7 +1,7 @@
 package com.dkelly205.order_service.controller;
 
-import com.dkelly205.base_domains.dto.OrderDto;
-import com.dkelly205.order_service.kafka.OrderProducer;
+import com.dkelly205.order_service.dto.OrderRequest;
+import com.dkelly205.order_service.dto.OrderResponse;
 import com.dkelly205.order_service.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<OrderDto> placeOrder(@RequestBody @Valid OrderDto orderDto){
-        OrderDto savedOrderDto = orderService.create(orderDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedOrderDto);
+    public ResponseEntity<OrderResponse> placeOrder(@RequestBody @Valid OrderRequest orderRequest){
+        OrderResponse orderResponse = orderService.create(orderRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
     }
 }
